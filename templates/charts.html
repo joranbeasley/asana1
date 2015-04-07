@@ -1,0 +1,18 @@
+{% extends "base.lite.html" %}
+{% block extra_head %}
+    <link href="/static/vendor/c3-0.4.10/c3.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+    <script src="/static/vendor/c3-0.4.10/c3.js"></script>
+    <script src="/static/js/charts.js"></script>
+
+{% endblock %}
+{% block body %}
+<div id="cal_chart" class="container"></div>
+<div id="day_chart" class="container" style="background:white"></div>
+
+<script>
+    init_chart_load("#cal_chart","#day_chart")
+</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+<div class="container" ng-controller="TaskController">
+    <span ng-repeat="task in taskList" style="padding:0px;margin:0px">
+    <div class="col-md-11">
+        <a ng-class="calculateClass(task.id)" class="btn btn-block  text-left" href="#{{task.id|angular}}" ng-click="onClick($index,task.id)">{{task.name|angular}} [{{ task.time | angular}}]</a>
+    </div>
+    <div class="col-md-1">
+        <a href="/g/{{task.id|angular}}" class="btn btn-block" ><span class="glyphicon glyphicon-globe glyphicon-large" aria-hidden="true"></span></a>
+    </div></span>
+</div>

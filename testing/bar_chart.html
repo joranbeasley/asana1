@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Stack</title>
+<script src="http://d3js.org/d3.v2.js"></script>
+<style>
+svg {
+border: solid 1px #ccc;
+font: 10px sans-serif;
+shape-rendering: crispEdges;
+}
+</style>
+</head>
+<body>
+ 
+<div id="viz"></div>
+ 
+<script type="text/javascript">
+
+function stacked_bars(div_id,matrix){
+    this.w = 960,
+    this.h = 500;
+    console.log(div_id)
+    this.svg = d3.select(div_id).append("svg:svg")
+                .attr("class", "chart")
+                .attr("width", w)
+                .attr("height", h )
+                .append("svg:g")
+                .attr("transform", "translate(10,470)");
+    this.x = d3.scale.ordinal().rangeRoundBands([0, this.w-50])
+    this.y = d3.scale.linear().range([0, this.h-50])
+    this.colors = d3.scale.ordinal().range(["darkblue", "blue", "lightblue"])
+    this.remapped =["c1","c2","c3"].map(function(dat,i){
+        return matrix.map(function(d,ii){
+                            return {x: ii, y: d[i+1] };
+                          })
+    });
+    console.log("REMAP---------------------------");
+    console.log(this.remapped)
+    this.stacked =  d3.layout.stack()(this.remapped)
+    console.log("LAYOUT---------------------------");
+    console.log(this.stacked)
+    this.x.domain(this.stacked[0].map(function(d) { return d.x; }));
+    this.y.domain([0, d3.max(this.stacked[this.stacked.length - 1],
+                              function(d) { return d.y0 + d.y; })]);
+    console.log("x.domain(): " + this.x.domain())
+    console.log("y.domain(): " + this.y.domain())
+    var colors = this.colors
+    this.valgroup = svg.selectAll("g.valgroup")
+        .data(this.stacked)
+        .enter().append("svg:g")
+        .attr("class", "valgroup")
+        .style("fill", function(d, i) { return colors(i); })
+        .style("stroke", function(d, i) { return d3.rgb(colors(i)).darker(); });
+    console.log("ASD"+this.valgroup)
+    var X = this.x;
+    var Y = this.y;
+    this.rect = valgroup.selectAll("rect")
+        .data(function(d){return d;})
+        .enter().append("svg:rect")
+        .attr("x", function(d) { return X(d.x); })
+        .attr("y", function(d) { return -Y(d.y0) - Y(d.y); })
+        .attr("height", function(d) { return Y(d.y); })
+        .attr("width", this.x.rangeBand());
+    console.log("DONE")
+    return this
+}
+
+
+
+console.log("RAW MATRIX---------------------------");
+// 4 columns: ID,c1,c2,c3
+var matrix = [
+[ 1, 5871, 8916, 2868],
+[ 2, 10048, 2060, 6171],
+[ 3, 16145, 8090, 8045],
+[ 4, 990, 940, 6907],
+[ 5, 450, 430, 5000]
+];
+x = stacked_bars("#viz",matrix)
+console.log(x)
+</script>
+</body>
+</html> 
