@@ -4,7 +4,6 @@ import requests
 from models import User
 
 
-
 login_manager = LoginManager()
 login_manager.login_view = "routes.response"
 
@@ -42,6 +41,7 @@ def load_user_from_request(request):
         user = User.get(User.api_key==api_key)
         if user:
             return user[0]
+        
 
     # finally, return None if both methods did not login the user
     return None
