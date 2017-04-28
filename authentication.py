@@ -3,7 +3,7 @@ import constants
 import requests
 from models import User
 
-
+ 
 
 login_manager = LoginManager()
 login_manager.login_view = "routes.response"
