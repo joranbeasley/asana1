@@ -1,5 +1,6 @@
 from collections import defaultdict
 import json
+
 import datetime
 from flask import Blueprint, Session, request
 from flask.ext.login import login_required, current_user
